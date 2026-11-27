@@ -11,6 +11,8 @@ y aplicación de patrones de diseño, **todos consistentes entre sí**.
 > Los diagramas no se generan por separado: se genera **un único modelo canónico** del
 > sistema y cada diagrama es una **proyección** de ese modelo. Un validador determinista
 > verifica las reglas de consistencia entre vistas antes de entregar nada.
+> El **editor web de diagramas** edita ese mismo modelo, así que lo que dibuja el alumno
+> y lo que genera el agente se validan igual.
 
 Así, si `Vuelo` tiene `fecha` y `horaPartidaProgramada` en el diagrama de clases, el
 diagrama de secuencia sólo puede usar esos atributos (vía `getFecha()`, etc.) porque
@@ -27,6 +29,7 @@ ambos salen del mismo objeto.
 | [docs/04-aprendizaje.md](docs/04-aprendizaje.md) | Retroalimentación y "entrenamiento": qué es posible y qué no |
 | [docs/05-evaluacion.md](docs/05-evaluacion.md) | Cómo medimos si el profesor es bueno |
 | [docs/06-roadmap.md](docs/06-roadmap.md) | Plan de 2 años con la pausa de investigación |
+| [docs/07-editor-uml.md](docs/07-editor-uml.md) | Editor web de diagramas consistente y exportable a PDF |
 | [docs/convenciones-catedra.md](docs/convenciones-catedra.md) | Convenciones de la cátedra extraídas de los EPC |
 | [docs/bitacora.md](docs/bitacora.md) | Bitácora de decisiones y avances (para retomar en 1 año) |
 | [docs/adr/](docs/adr/) | Registros de decisiones de arquitectura (ADR) |

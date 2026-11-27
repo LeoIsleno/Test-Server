@@ -24,7 +24,10 @@ Construir un **agente "Profesor DSI"** que:
    patrón) como proyección de un modelo canónico único.
 4. **Verifique** la consistencia entre todos los artefactos con reglas deterministas y
    corrija antes de responder.
-5. **Mejore con el uso**: cada corrección validada (por el alumno o por un docente)
+5. **Ofrezca un editor web de diagramas** (clases, secuencia, DTE, comunicación, DER)
+   que edita el mismo modelo, valida en vivo y exporta a PDF (doc 07). Sirve también
+   para estudiar para el final de DSI.
+6. **Mejore con el uso**: cada corrección validada (por el alumno o por un docente)
    alimenta el corpus, los ejemplos y el set de evaluación.
 
 ## Objetivos específicos (medibles)

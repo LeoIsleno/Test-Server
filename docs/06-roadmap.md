@@ -5,6 +5,7 @@
 | 0. Diseño | Mes 0–1 | Esta documentación, ADRs, esquema v0 | Esquema y reglas revisados |
 | 1. Corpus semilla | Mes 1–3 | 3–5 EPC transcriptos y validados (empezando por Líneas Aéreas) | Validador corre sobre ellos; hallazgos documentados |
 | 2. Validador + proyector | Mes 2–4 | Reglas RC/CR/DT/PT con tests; render PlantUML | Detecta los hallazgos conocidos del corpus semilla |
+| 2b. Editor v1 | Mes 3–6 | Editor de clases + secuencia sobre el modelo, validación en vivo, export PDF | Se puede rehacer CU2 de Líneas Aéreas en el editor sin violaciones |
 | 3. Línea base | Mes 4–5 | Prompt único sin RAG; set de evaluación v1 | Números de línea base publicados en bitácora |
 | 4. Pipeline v1 | Mes 5–8 | Router + RAG + modelador + ciclo evaluador-optimizador | Mejora medible sobre línea base en test |
 | 5. Modo tutor | Mes 8–11 | Revisión de diagramas del alumno | Precisión de detección medida |
