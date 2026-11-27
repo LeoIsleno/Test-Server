@@ -1,0 +1,4 @@
+corpus/_raw/
+*.pdf
+__pycache__/
+.env

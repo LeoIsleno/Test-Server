@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "0.1",
+  "estadoValidacion": "borrador",
+  "fuente": "EPC Líneas Aéreas v1.35, págs. 8-9, 15, 17, 18, 21-22",
+  "casosDeUso": [
+    {
+      "id": "CU2",
+      "nombre": "Cancelar Vuelo",
+      "actor": "EncargadoNavegacion",
+      "pasos": [
+        { "nro": 1,  "quien": "Actor",   "texto": "selecciona la opción Cancelar Vuelo" },
+        { "nro": 2,  "quien": "Sistema", "texto": "muestra los vuelos posibles de cancelar (número, origen, destino, horario)", "reglas": ["RN7"] },
+        { "nro": 3,  "quien": "Actor",   "texto": "selecciona un vuelo" },
+        { "nro": 4,  "quien": "Sistema", "texto": "requiere seleccionar un motivo de cancelación" },
+        { "nro": 5,  "quien": "Actor",   "texto": "selecciona un motivo de cancelación" },
+        { "nro": 6,  "quien": "Sistema", "texto": "solicita ingresar una descripción" },
+        { "nro": 7,  "quien": "Actor",   "texto": "ingresa la descripción" },
+        { "nro": 8,  "quien": "Sistema", "texto": "solicita confirmar la cancelación" },
+        { "nro": 9,  "quien": "Actor",   "texto": "confirma la cancelación" },
+        { "nro": 10, "quien": "Sistema", "texto": "registra motivo, descripción, fecha, hora y usuario responsable; actualiza el estado a Cancelado y notifica a los interesados" }
+      ],
+      "alternativos": [
+        { "id": "A1", "texto": "No existen vuelos posibles de cancelar" },
+        { "id": "A2", "texto": "No confirma la cancelación" },
+        { "id": "A3", "texto": "El EN cancela la ejecución del CU" }
+      ]
+    }
+  ],
+  "clases": [
+    {
+      "nombre": "PantallaCancelacionVuelo", "estereotipo": "boundary",
+      "atributos": ["areaTextoDescripcion", "gestorCancelacion", "listadoDeVuelos", "listaMotivosCancelacion", "opcionCancelar", "opcionConfirmar"],
+      "metodos": ["habilitarVentana", "mostrarInfoVuelos", "mostrarMotivosCancelacion", "opcionCancelarVuelo", "pedirConfirmacionCancelacion", "pedirIngresoDescripcion", "tomarConfCancelacion", "tomarIngresoDescripcion", "tomarSeleccionMotivoCancelacion", "tomarSeleccionVuelo"]
+    },
+    {
+      "nombre": "GestorCancelacionVuelo", "estereotipo": "control",
+      "atributos": ["descripcion", "estado", "motivoCancelacion", "pantallaCancelacionVuelo", "sesion"],
+      "metodos": ["buscarEstadoCancelacion", "buscarVueloFactibleCancelar", "cancelarVuelo", "finCU", "listarMotivosCancelacion", "notificarEstadoVuelo", "nuevaCancelacion", "obtenerFechaYHoraActual", "obtenerUsuarioSesion", "registrarCancelacion", "tomarConfCancelacion", "tomarDescripcion", "tomarMotivoCancelacion", "tomarVuelo"]
+    },
+    {
+      "nombre": "Vuelo", "estereotipo": "entity",
+      "atributos": ["fecha", "horaPartidaProgramada"],
+      "metodos": ["esAterrizado", "esFactibleCancelar", "getFecha", "getFechaHoraPartidaProgramada", "getHoraPartidaProgramada", "mostrarDatosDefinicion", "mostrarDatosVuelo", "obtenerEstadoActual", "obtenerNroVuelo"],
+      "_nota": "Tal cual la vista de clases de CU2 (pág. 18). Ver hallazgo H2: faltan cancelar() y crearCambioEstadoVuelo()."
+    },
+    {
+      "nombre": "CambioEstadoVuelo", "estereotipo": "entity",
+      "atributos": ["comentario", "fechaHoraFin", "fechaHoraInicio"],
+      "metodos": ["esCancelable", "esEstadoActual", "esEstadoEnZona", "getEmpleado", "getEstado", "getFechaHoraFin", "getMotivoCancelacion", "getSesion", "new", "setFechaHoraFin"]
+    },
+    {
+      "nombre": "Estado", "estereotipo": "entity",
+      "atributos": ["descripcion", "esCancelable", "esFinal", "nombre"],
+      "metodos": ["esCancelado", "esEstadoEnZona", "esEstadoFinal", "getCancelable", "getFinal", "getNombre", "permiteCancelacion", "setCancelable", "setFinal", "setNombre"]
+    },
+    { "nombre": "MotivoCancelacion", "estereotipo": "entity", "atributos": ["descripcion"], "metodos": ["getDescripcion"] },
+    { "nombre": "Sesion", "estereotipo": "entity", "atributos": ["fechaHora"], "metodos": ["obtenerEmpleado"] },
+    {
+      "nombre": "DefinicionDeVuelo", "estereotipo": "entity",
+      "atributos": ["duracion", "horarioPartida", "nroVuelo", "tiempoEmbarque"],
+      "metodos": ["getNroVuelo", "getTipoAeroNave", "mostrarCiudadDestino", "mostrarCiudadOrigen"]
+    },
+    { "nombre": "Aeropuerto", "estereotipo": "entity", "atributos": ["codigo", "direccion", "nombre"], "metodos": ["deQueCiudad", "getNombre", "getNombreCiudad"] },
+    { "nombre": "Ciudad", "estereotipo": "entity", "atributos": ["codigo", "nombre"], "metodos": ["getAeropuerto", "getNombre"] }
+  ],
+  "relaciones": [
+    { "desde": "Vuelo", "hacia": "CambioEstadoVuelo", "rol": "cambioEstadoVuelo", "mult": "1..*" },
+    { "desde": "Vuelo", "hacia": "DefinicionDeVuelo", "rol": "definicionDeVuelo", "mult": "1" },
+    { "desde": "CambioEstadoVuelo", "hacia": "Estado", "rol": "estado", "mult": "1" },
+    { "desde": "CambioEstadoVuelo", "hacia": "MotivoCancelacion", "rol": "motivo", "mult": "0..1" },
+    { "desde": "CambioEstadoVuelo", "hacia": "Empleado", "rol": "empleado", "mult": "1" },
+    { "desde": "DefinicionDeVuelo", "hacia": "Aeropuerto", "rol": "origen", "mult": "1" },
+    { "desde": "DefinicionDeVuelo", "hacia": "Aeropuerto", "rol": "destino", "mult": "1" }
+  ],
+  "realizaciones": [
+    {
+      "cu": "CU2", "curso": "normal", "vista": "secuencia", "_estado": "parcial: tramo final (confirmación y registro)",
+      "lineasDeVida": [
+        { "id": "pantalla", "clase": "PantallaCancelacionVuelo" },
+        { "id": "gestor", "clase": "GestorCancelacionVuelo" },
+        { "id": "sesion", "clase": "Sesion" },
+        { "id": "estados", "clase": "Estado", "multiobjeto": true },
+        { "id": "elegido", "clase": "Vuelo" },
+        { "id": "actual", "clase": "CambioEstadoVuelo" },
+        { "id": "cancelado", "clase": "CambioEstadoVuelo" }
+      ],
+      "mensajes": [
+        { "desde": "actor",   "hacia": "pantalla",  "metodo": "tomarConfCancelacion", "pasoCU": 9 },
+        { "desde": "pantalla","hacia": "gestor",    "metodo": "tomarConfCancelacion", "pasoCU": 9 },
+        { "desde": "gestor",  "hacia": "gestor",    "metodo": "cancelarVuelo",        "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "gestor",    "metodo": "obtenerFechaYHoraActual", "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "gestor",    "metodo": "obtenerUsuarioSesion", "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "sesion",    "metodo": "obtenerEmpleado",      "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "gestor",    "metodo": "buscarEstadoCancelacion", "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "estados",   "metodo": "esCancelado", "iterativo": true, "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "gestor",    "metodo": "registrarCancelacion", "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "elegido",   "metodo": "cancelar",             "pasoCU": 10, "_hallazgo": "H2" },
+        { "desde": "elegido", "hacia": "actual",    "metodo": "setFechaHoraFin",      "pasoCU": 10 },
+        { "desde": "elegido", "hacia": "elegido",   "metodo": "crearCambioEstadoVuelo", "pasoCU": 10, "_hallazgo": "H2" },
+        { "desde": "elegido", "hacia": "cancelado", "metodo": "new",                  "pasoCU": 10 },
+        { "desde": "gestor",  "hacia": "gestor",    "metodo": "notificar",            "pasoCU": 10, "_hallazgo": "H3" },
+        { "desde": "gestor",  "hacia": "gestor",    "metodo": "finCU" }
+      ]
+    }
+  ],
+  "maquinasDeEstado": [
+    {
+      "clase": "Vuelo", "_estado": "sólo transiciones de cancelación",
+      "transiciones": [
+        { "desde": "Programado",   "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" },
+        { "desde": "Reprogramado", "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" },
+        { "desde": "Demorado",     "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" },
+        { "desde": "EnEmbarque",   "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" },
+        { "desde": "Cerrado",      "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" },
+        { "desde": "EnEjecucion.EnDespegue", "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" },
+        { "desde": "EnEjecucion.EnAire",     "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" },
+        { "desde": "EnEjecucion.EnZona",     "hacia": "Cancelado", "evento": "Cancelar Vuelo", "accion": "cancelar", "cu": "CU2" }
+      ],
+      "_nota": "DT-01 exige Vuelo.cancelar() (hallazgo H2). DT-03 contrasta estos estados con el paso 2 del CU (hallazgo H1). 'Cerrado' leído del DTE pág. 21: confirmar."
+    }
+  ]
+}
