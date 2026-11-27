@@ -72,8 +72,8 @@ Severidad: **B** = bloqueante (no se entrega), **A** = advertencia (se explica a
 |---|---|---|
 | CR-01 | Todo paso "Sistema" del curso normal está realizado por ≥ 1 mensaje | B |
 | CR-02 | Todo paso "Actor" se corresponde con un mensaje actor→boundary y boundary→control | B |
-| CR-03 | El orden de los mensajes respeta el orden de los pasos | B |
-| CR-04 | La realización termina con `finCU()` en el control | A |
+| CR-03 | El orden de los mensajes respeta el orden de los pasos. **Bajada a A** al calibrar con el corpus: la cátedra intercala pasos origen/destino (hallazgo H14) | A |
+| CR-04 | La realización termina con `finCU()` o `finCasoDeUso()` en el control | A |
 | CR-05 | Los datos que el CU dice "mostrar" (p. ej. número de vuelo, origen, destino, horario) se obtienen por mensajes hacia las clases que los poseen | B |
 
 ### DTE ↔ Clases / CU / Reglas

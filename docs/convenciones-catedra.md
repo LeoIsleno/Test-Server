@@ -15,7 +15,10 @@ que el validador chequea como advertencias y que van en el prompt fijo (cacheado
   como atributo (`paisOrigenSeleccionado`, `motivoCancelacion`).
 - Pedidos del sistema al actor: `solicitar…()`, `pedir…()`, `listar…()`, `mostrar…()`
   en la pantalla.
-- El gestor cierra con `finCU()`.
+- El gestor cierra con `finCU()` (CU2, CU3) o `finCasoDeUso()` (CU1).
+- En selecciones en cascada con origen y destino, la realización intercala: país origen →
+  provincias de origen → país destino → provincias de destino → … aunque el CU los
+  agrupe en un mismo paso.
 - Mensajes iterativos con `*` (`*getNombre()`), y en secuencia dentro de fragmentos
   `loop` con guarda `[mientras haya <cosas>]`.
 - Fecha/hora actual y usuario logueado: `obtenerFechaYHoraActual()`,

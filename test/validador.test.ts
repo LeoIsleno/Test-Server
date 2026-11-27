@@ -64,3 +64,26 @@ test("CR-04: falta finCU()", () => {
   m.realizaciones[0].mensajes.pop();
   assert.ok(validar(m).some((v) => v.regla === "CR-04"));
 });
+
+const cargarArchivo = (f: string): ModeloCanonico =>
+  JSON.parse(readFileSync(`corpus/epc-lineas-aereas/modelo/${f}.json`, "utf8"));
+
+test("CU1 Consultar disponibilidad: detecta H9–H13 y el intercalado origen/destino", () => {
+  const v = validar(cargarArchivo("cu1-consultar-disponibilidad"));
+  const rc01 = v.filter((x) => x.regla === "RC-01").map((x) => x.detalle);
+  for (const esperado of [
+    "PantallaConsultarDisponibilidad no tiene el método habilitarFlexibilidadHorarios()", // H9
+    "GestorDeConsultaDisponibilidad no tiene el método cantidadPasajerosPorTipoIndicado()", // H10
+    "Aeropuerto no tiene el método getCiudad()", // H11 (lectura dudosa)
+    "TipoAeronave no tiene el método obtenerCapacidadSegunClase()", // H12
+    "GestorDeConsultaDisponibilidad no tiene el método determinarDisponibilidadSegunCantidad()", // H13
+    "GestorDeConsultaDisponibilidad no tiene el método calcularImporteTotal()", // H13
+  ]) assert.ok(rc01.includes(esperado), esperado);
+  assert.ok(v.some((x) => x.regla === "CR-03" && x.severidad === "A"));
+  assert.ok(!v.some((x) => x.regla === "CR-01"), "todos los pasos del CU están realizados");
+  assert.ok(!v.some((x) => x.regla === "CR-04"), "finCasoDeUso() se acepta como cierre");
+});
+
+test("CU3 Actualizar situación (aterrizar): consistente, 0 violaciones", () => {
+  assert.deepEqual(validar(cargarArchivo("cu3-actualizar-situacion")), []);
+});

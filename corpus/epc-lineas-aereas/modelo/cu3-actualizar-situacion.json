@@ -1,0 +1,765 @@
+{
+  "schemaVersion": "0.1",
+  "estadoValidacion": "borrador",
+  "fuente": "EPC Líneas Aéreas v1.35, págs. 10 (CU, escenario aterrizar), 19 (secuencia), 20 (vista de clases), 21-22 (DTE)",
+  "casosDeUso": [
+    {
+      "id": "CU3",
+      "nombre": "Actualizar situación de Vuelo (escenario Aterrizar)",
+      "actor": "EncargadoNavegacion",
+      "pasos": [
+        {
+          "nro": 1,
+          "quien": "Actor",
+          "texto": "selecciona la opción Actualizar situación de Vuelo"
+        },
+        {
+          "nro": 2,
+          "quien": "Sistema",
+          "texto": "busca y muestra las opciones de actualización de estado (vuelos en estado no final) y solicita qué estado actualizar"
+        },
+        {
+          "nro": 3,
+          "quien": "Actor",
+          "texto": "selecciona la opción Aterrizar Vuelo"
+        },
+        {
+          "nro": 4,
+          "quien": "Sistema",
+          "texto": "busca los vuelos en condiciones de aterrizar (en zona), muestra número de vuelo y fecha y hora de partida programada, y solicita seleccionarlos"
+        },
+        {
+          "nro": 5,
+          "quien": "Actor",
+          "texto": "selecciona un vuelo para aterrizar"
+        },
+        {
+          "nro": 6,
+          "quien": "Sistema",
+          "texto": "solicita confirmación para marcar el vuelo como aterrizado"
+        },
+        {
+          "nro": 7,
+          "quien": "Actor",
+          "texto": "confirma la actualización"
+        },
+        {
+          "nro": 8,
+          "quien": "Sistema",
+          "texto": "registra fecha, hora y usuario responsable, actualiza el estado a aterrizado y notifica a los interesados"
+        }
+      ],
+      "alternativos": [
+        {
+          "id": "A1",
+          "texto": "No existen vuelos en el estado buscado"
+        },
+        {
+          "id": "A2",
+          "texto": "Selecciona todos los vuelos"
+        },
+        {
+          "id": "A3",
+          "texto": "Selecciona varios vuelos"
+        },
+        {
+          "id": "A4",
+          "texto": "Despegue (vuelos cerrados)"
+        },
+        {
+          "id": "A5",
+          "texto": "En aire (vuelos en despegue)"
+        },
+        {
+          "id": "A6",
+          "texto": "En zona (vuelos en aire)"
+        },
+        {
+          "id": "A7",
+          "texto": "Demorado (programados o reprogramados)"
+        },
+        {
+          "id": "A8",
+          "texto": "Embarcando (demorados, programados o reprogramados)"
+        },
+        {
+          "id": "A9",
+          "texto": "Cerrado (vuelos en embarque)"
+        },
+        {
+          "id": "A11",
+          "texto": "Finalizado (vuelos aterrizados)"
+        },
+        {
+          "id": "A12",
+          "texto": "El EN cancela el CU"
+        }
+      ]
+    }
+  ],
+  "clases": [
+    {
+      "nombre": "PantSituacionVuelo",
+      "estereotipo": "boundary",
+      "atributos": [
+        "estadoElegido",
+        "estadoNoFinal",
+        "labelEstadoVuelosActualizar",
+        "vueloElegido",
+        "vuelosAActualizar"
+      ],
+      "metodos": [
+        "habilitarInterfaz",
+        "mostrarVuelosActualizar",
+        "opcionActualizarSituacionVuelo",
+        "opcionAterrizarVuelo",
+        "pedirConfirmacionAterrizarVuelo",
+        "tomarConfAterrizarVuelo",
+        "tomarSeleccionVuelo",
+        "visualizarEstados"
+      ]
+    },
+    {
+      "nombre": "GestorSituacionVuelo",
+      "estereotipo": "control",
+      "atributos": [
+        "estadoDestino",
+        "estadoElegidoParaActualizar",
+        "estadosNoFinales",
+        "fechaHoraActual",
+        "infoVuelosActualizables",
+        "sesion",
+        "vueloElegido"
+      ],
+      "metodos": [
+        "actualizarSituacionVuelo",
+        "aterrizarVuelo",
+        "buscarEstadoAterrizado",
+        "buscarEstadosNoFinales",
+        "buscarVuelosEnZona",
+        "finCU",
+        "obtenerFechaHoraActual",
+        "obtenerInfoVuelosEnZona",
+        "obtenerUsuarioSesion",
+        "registrarAterrizajeVuelo",
+        "tomarConfAterrizajeVuelo",
+        "tomarSeleccionEstadoActualVuelo",
+        "tomarSeleccionEstadoDestino",
+        "tomarVueloElegido"
+      ]
+    },
+    {
+      "nombre": "PantallaEstadosDeVuelo",
+      "estereotipo": "boundary",
+      "atributos": [
+        "estado",
+        "fechaVuelo",
+        "horaVuelo",
+        "nroVuelo"
+      ],
+      "metodos": [
+        "actualizar",
+        "actualizarEstadoVuelos",
+        "buscarVuelo",
+        "setEstadoVuelo",
+        "setFecha",
+        "setHora",
+        "setNroVuelo"
+      ]
+    },
+    {
+      "nombre": "PantallaConsultarDisponibilidad",
+      "estereotipo": "boundary",
+      "atributos": [
+        "estado",
+        "fechaVuelo",
+        "flexibilidad",
+        "horaDesde",
+        "horaHasta",
+        "horaVuelo",
+        "nroVuelo"
+      ],
+      "metodos": [
+        "actualizar",
+        "actualizarEstadoVuelos",
+        "buscarVuelo",
+        "setEstadoVuelo",
+        "setFecha",
+        "setHora"
+      ],
+      "_nota": "pág. 20 muestra la clase completa; acá sólo lo usado por CU3 más algunos atributos"
+    },
+    {
+      "nombre": "Vuelo",
+      "estereotipo": "entity",
+      "atributos": [
+        "diagramacion",
+        "fecha",
+        "historialEstado",
+        "horaPartidaProgramada",
+        "reserva"
+      ],
+      "metodos": [
+        "aterrizar",
+        "calcularDisponibilidad",
+        "cancelar",
+        "cerrar",
+        "crearCambioEstadoVuelo",
+        "demorar",
+        "despegar",
+        "embarcar",
+        "enAire",
+        "enZona",
+        "esAterrizado",
+        "esDeFechaYHoraYDestino",
+        "esFactibleCancelar",
+        "getCambioEstadoVuelo",
+        "getDefinicionVuelo",
+        "getFecha",
+        "getFechaHoraPartidaProgramada",
+        "getHoraPartidaProgramada",
+        "getReserva",
+        "mostrarDatosDefinicion",
+        "mostrarDatosVuelo",
+        "new",
+        "obtenerCiudadDestino",
+        "obtenerCiudadOrigen",
+        "obtenerDisponibilidadPorClase",
+        "obtenerDuracion",
+        "obtenerEstadoActual",
+        "obtenerNroVuelo",
+        "obtenerReservasSegunClase",
+        "obtenerTarifaSegunClase",
+        "reprogramar",
+        "terminarVuelo"
+      ]
+    },
+    {
+      "nombre": "CambioEstadoVuelo",
+      "estereotipo": "entity",
+      "atributos": [
+        "comentario",
+        "estado",
+        "fechaHoraFin",
+        "fechaHoraInicio",
+        "motivoCancelacion"
+      ],
+      "metodos": [
+        "esCancelable",
+        "esEstadoActual",
+        "esEstadoEnZona",
+        "getEmpleado",
+        "getEstado",
+        "getFechaHoraFin",
+        "getMotivoCancelacion",
+        "getSesion",
+        "new",
+        "setFechaHoraFin"
+      ]
+    },
+    {
+      "nombre": "Estado",
+      "estereotipo": "entity",
+      "atributos": [
+        "descripcion",
+        "esCancelable",
+        "esFinal",
+        "nombre"
+      ],
+      "metodos": [
+        "esCancelado",
+        "esEstadoEnZona",
+        "esEstadoFinal",
+        "getCancelable",
+        "getFinal",
+        "getNombre",
+        "permiteCancelacion",
+        "setCancelable",
+        "setFinal",
+        "setNombre"
+      ]
+    },
+    {
+      "nombre": "DefinicionDeVuelo",
+      "estereotipo": "entity",
+      "atributos": [
+        "aeropuertoDestino",
+        "aeropuertoOrigen",
+        "diaSemana",
+        "duracion",
+        "horarioPartida",
+        "nroVuelo",
+        "tarifa",
+        "tiempoEmbarque"
+      ],
+      "metodos": [
+        "getAeropuertoDestino",
+        "getAeropuertoOrigen",
+        "getDiaSemana",
+        "getDuracion",
+        "getNroVuelo",
+        "getTarifa",
+        "getTipoAeroNave",
+        "mostrarCiudadDestino",
+        "mostrarCiudadOrigen",
+        "obtenerCapacidadSegunClase",
+        "obtenerTarifaSegunClase"
+      ]
+    },
+    {
+      "nombre": "Sesion",
+      "estereotipo": "entity",
+      "atributos": [
+        "fechaHora",
+        "responsable"
+      ],
+      "metodos": [
+        "obtenerEmpleado"
+      ]
+    },
+    {
+      "nombre": "Empleado",
+      "estereotipo": "entity",
+      "atributos": [
+        "apellido",
+        "cargo",
+        "nombre"
+      ],
+      "metodos": [
+        "getCargo",
+        "getNombreCompleto"
+      ]
+    }
+  ],
+  "relaciones": [
+    {
+      "desde": "Vuelo",
+      "hacia": "CambioEstadoVuelo",
+      "rol": "cambioEstadoVuelo",
+      "mult": "1..*"
+    },
+    {
+      "desde": "Vuelo",
+      "hacia": "DefinicionDeVuelo",
+      "rol": "definicionDeVuelo",
+      "mult": "1"
+    },
+    {
+      "desde": "CambioEstadoVuelo",
+      "hacia": "Estado",
+      "rol": "estado",
+      "mult": "1"
+    },
+    {
+      "desde": "CambioEstadoVuelo",
+      "hacia": "Empleado",
+      "rol": "empleado",
+      "mult": "1"
+    },
+    {
+      "desde": "Sesion",
+      "hacia": "Empleado",
+      "rol": "responsable",
+      "mult": "1"
+    }
+  ],
+  "realizaciones": [
+    {
+      "cu": "CU3",
+      "curso": "aterrizar",
+      "vista": "secuencia",
+      "fuente": "pág. 19",
+      "lineasDeVida": [
+        {
+          "id": "pantalla",
+          "clase": "PantSituacionVuelo"
+        },
+        {
+          "id": "gestor",
+          "clase": "GestorSituacionVuelo"
+        },
+        {
+          "id": "estados",
+          "clase": "Estado",
+          "multiobjeto": true
+        },
+        {
+          "id": "vuelos",
+          "clase": "Vuelo",
+          "multiobjeto": true
+        },
+        {
+          "id": "cambios",
+          "clase": "CambioEstadoVuelo",
+          "multiobjeto": true
+        },
+        {
+          "id": "actual",
+          "clase": "CambioEstadoVuelo"
+        },
+        {
+          "id": "estado",
+          "clase": "Estado"
+        },
+        {
+          "id": "definicion",
+          "clase": "DefinicionDeVuelo"
+        },
+        {
+          "id": "elegido",
+          "clase": "Vuelo"
+        },
+        {
+          "id": "sesion",
+          "clase": "Sesion"
+        },
+        {
+          "id": "empleado",
+          "clase": "Empleado"
+        },
+        {
+          "id": "nuevo",
+          "clase": "CambioEstadoVuelo"
+        },
+        {
+          "id": "pantallaConsulta",
+          "clase": "PantallaConsultarDisponibilidad"
+        },
+        {
+          "id": "pantallaEstados",
+          "clase": "PantallaEstadosDeVuelo",
+          "multiobjeto": true
+        }
+      ],
+      "mensajes": [
+        {
+          "nro": 1,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "opcionActualizarSituacionVuelo",
+          "pasoCU": 1
+        },
+        {
+          "nro": 2,
+          "desde": "pantalla",
+          "hacia": "pantalla",
+          "metodo": "habilitarInterfaz",
+          "pasoCU": 1
+        },
+        {
+          "nro": 3,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "actualizarSituacionVuelo",
+          "pasoCU": 1
+        },
+        {
+          "nro": 4,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "buscarEstadosNoFinales",
+          "pasoCU": 2
+        },
+        {
+          "nro": 5,
+          "desde": "gestor",
+          "hacia": "estados",
+          "metodo": "esEstadoFinal",
+          "pasoCU": 2,
+          "iterativo": true
+        },
+        {
+          "nro": 6,
+          "desde": "gestor",
+          "hacia": "estados",
+          "metodo": "getNombre",
+          "pasoCU": 2,
+          "iterativo": true
+        },
+        {
+          "nro": 7,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "visualizarEstados",
+          "pasoCU": 2
+        },
+        {
+          "nro": 8,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "opcionAterrizarVuelo",
+          "pasoCU": 3
+        },
+        {
+          "nro": 9,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "aterrizarVuelo",
+          "pasoCU": 3
+        },
+        {
+          "nro": 10,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "buscarVuelosEnZona",
+          "pasoCU": 4
+        },
+        {
+          "nro": 11,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "obtenerEstadoActual",
+          "pasoCU": 4,
+          "iterativo": true
+        },
+        {
+          "nro": 12,
+          "desde": "vuelos",
+          "hacia": "cambios",
+          "metodo": "esEstadoActual",
+          "pasoCU": 4,
+          "iterativo": true
+        },
+        {
+          "nro": 13,
+          "desde": "vuelos",
+          "hacia": "actual",
+          "metodo": "esEstadoEnZona",
+          "pasoCU": 4
+        },
+        {
+          "nro": 14,
+          "desde": "actual",
+          "hacia": "estado",
+          "metodo": "esEstadoEnZona",
+          "pasoCU": 4
+        },
+        {
+          "nro": 15,
+          "desde": "actual",
+          "hacia": "estado",
+          "metodo": "getNombre",
+          "pasoCU": 4
+        },
+        {
+          "nro": 16,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerInfoVuelosEnZona",
+          "pasoCU": 4
+        },
+        {
+          "nro": 17,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "obtenerNroVuelo",
+          "pasoCU": 4,
+          "iterativo": true
+        },
+        {
+          "nro": 18,
+          "desde": "vuelos",
+          "hacia": "definicion",
+          "metodo": "getNroVuelo",
+          "pasoCU": 4
+        },
+        {
+          "nro": 19,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "getFechaHoraPartidaProgramada",
+          "pasoCU": 4,
+          "iterativo": true
+        },
+        {
+          "nro": 20,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "mostrarVuelosActualizar",
+          "pasoCU": 4
+        },
+        {
+          "nro": 21,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "tomarSeleccionVuelo",
+          "pasoCU": 5
+        },
+        {
+          "nro": 22,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "tomarVueloElegido",
+          "pasoCU": 5
+        },
+        {
+          "nro": 23,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "pedirConfirmacionAterrizarVuelo",
+          "pasoCU": 6
+        },
+        {
+          "nro": 24,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "tomarConfAterrizarVuelo",
+          "pasoCU": 7
+        },
+        {
+          "nro": 25,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "tomarConfAterrizajeVuelo",
+          "pasoCU": 7
+        },
+        {
+          "nro": 26,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "aterrizarVuelo",
+          "pasoCU": 8
+        },
+        {
+          "nro": 27,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerFechaHoraActual",
+          "pasoCU": 8
+        },
+        {
+          "nro": 28,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerUsuarioSesion",
+          "pasoCU": 8
+        },
+        {
+          "nro": 29,
+          "desde": "gestor",
+          "hacia": "sesion",
+          "metodo": "obtenerEmpleado",
+          "pasoCU": 8
+        },
+        {
+          "nro": 30,
+          "desde": "sesion",
+          "hacia": "empleado",
+          "metodo": "getNombreCompleto",
+          "pasoCU": 8
+        },
+        {
+          "nro": 31,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "buscarEstadoAterrizado",
+          "pasoCU": 8
+        },
+        {
+          "nro": 32,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "esAterrizado",
+          "pasoCU": 8,
+          "iterativo": true
+        },
+        {
+          "nro": 33,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "registrarAterrizajeVuelo",
+          "pasoCU": 8
+        },
+        {
+          "nro": 34,
+          "desde": "gestor",
+          "hacia": "elegido",
+          "metodo": "aterrizar",
+          "pasoCU": 8
+        },
+        {
+          "nro": 35,
+          "desde": "elegido",
+          "hacia": "actual",
+          "metodo": "setFechaHoraFin",
+          "pasoCU": 8
+        },
+        {
+          "nro": 36,
+          "desde": "elegido",
+          "hacia": "elegido",
+          "metodo": "crearCambioEstadoVuelo",
+          "pasoCU": 8
+        },
+        {
+          "nro": 37,
+          "desde": "elegido",
+          "hacia": "nuevo",
+          "metodo": "new",
+          "pasoCU": 8
+        },
+        {
+          "nro": 38,
+          "desde": "gestor",
+          "hacia": "pantallaEstados",
+          "metodo": "actualizarEstadoVuelos",
+          "pasoCU": 8
+        },
+        {
+          "nro": 39,
+          "desde": "gestor",
+          "hacia": "pantallaConsulta",
+          "metodo": "actualizarEstadoVuelos",
+          "pasoCU": 8
+        },
+        {
+          "nro": 40,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "finCU"
+        }
+      ],
+      "fragmentos": [
+        {
+          "tipo": "loop",
+          "guarda": "mientras haya estado",
+          "mensajes": [
+            5,
+            6
+          ]
+        },
+        {
+          "tipo": "loop",
+          "guarda": "mientras haya vuelos",
+          "mensajes": [
+            11,
+            15
+          ]
+        },
+        {
+          "tipo": "loop",
+          "guarda": "mientras haya vuelos",
+          "mensajes": [
+            17,
+            19
+          ]
+        }
+      ]
+    }
+  ],
+  "maquinasDeEstado": [
+    {
+      "clase": "Vuelo",
+      "_estado": "sólo la transición del escenario aterrizar",
+      "transiciones": [
+        {
+          "desde": "EnEjecucion.EnZona",
+          "hacia": "EnEjecucion.Aterrizado",
+          "evento": "Actualizar situación de vuelo",
+          "accion": "aterrizar",
+          "cu": "CU3"
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,18 @@
 
 Formato: fecha — qué se hizo — qué se decidió — próximo paso. Lo más nuevo arriba.
 
+## 2026-11-27 — CU1 y CU3 transcriptos
+- CU1 (comunicación, 86 mensajes, págs. 4–6, 13, 14) y CU3 escenario aterrizar
+  (secuencia, 40 mensajes, págs. 10, 19, 20). Transcripción manual desde las imágenes,
+  sin validación humana todavía; lecturas dudosas marcadas con `_lectura`.
+- Resultados: CU1 → 7 bloqueantes + 2 advertencias (H9–H14). CU3 → 0 violaciones.
+- Calibración con el corpus: CR-03 pasa a advertencia (intercalado origen/destino es
+  práctica de la cátedra); CR-04 acepta `finCasoDeUso()`; CR-01 aplica a todo escenario.
+- Nueva herramienta `npm run ficha`: genera tablas Markdown de lo transcripto para
+  revisar contra el PDF (fichas en `corpus/epc-lineas-aereas/fichas/`).
+- Próximo paso: **revisión humana de las 3 fichas** contra el PDF; luego DTE completo de
+  Vuelo y reglas de Observer (PT-01/02).
+
 ## 2026-11-27 — Validador v0 sobre Líneas Aéreas
 - Stack: TypeScript (ADR-0002, adoptado de hecho; pendiente confirmación del autor).
 - Transcripción completa de la secuencia de CU2 (49 mensajes, pág. 17).

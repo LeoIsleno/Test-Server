@@ -1,0 +1,1208 @@
+{
+  "schemaVersion": "0.1",
+  "estadoValidacion": "borrador",
+  "fuente": "EPC Líneas Aéreas v1.35, págs. 4-6 (CU, curso normal abreviado), 13 (comunicación, 86 mensajes), 14 (vista de clases)",
+  "casosDeUso": [
+    {
+      "id": "CU1",
+      "nombre": "Consultar disponibilidad de vuelos",
+      "actor": "Pasajero",
+      "pasos": [
+        {
+          "nro": 1,
+          "quien": "Actor",
+          "texto": "selecciona la opción Consultar disponibilidad de vuelos"
+        },
+        {
+          "nro": 2,
+          "quien": "Sistema",
+          "texto": "requiere que se indique el Tipo de Vuelo"
+        },
+        {
+          "nro": 3,
+          "quien": "Actor",
+          "texto": "selecciona Tipo de Vuelo = Sólo Ida"
+        },
+        {
+          "nro": 4,
+          "quien": "Sistema",
+          "texto": "requiere País de Origen y de Destino"
+        },
+        {
+          "nro": 5,
+          "quien": "Actor",
+          "texto": "selecciona País de Origen y de Destino"
+        },
+        {
+          "nro": 6,
+          "quien": "Sistema",
+          "texto": "obtiene las Provincias de los Países seleccionados y requiere Provincia de Origen y de Destino"
+        },
+        {
+          "nro": 7,
+          "quien": "Actor",
+          "texto": "selecciona Provincia de Origen y de Destino"
+        },
+        {
+          "nro": 8,
+          "quien": "Sistema",
+          "texto": "muestra Ciudades de las Provincias seleccionadas y requiere Ciudad de Origen y de Destino"
+        },
+        {
+          "nro": 9,
+          "quien": "Actor",
+          "texto": "selecciona Ciudad de Origen y de Destino"
+        },
+        {
+          "nro": 10,
+          "quien": "Sistema",
+          "texto": "solicita si admite flexibilidad en horarios habilitando el ingreso de una fecha"
+        },
+        {
+          "nro": 11,
+          "quien": "Actor",
+          "texto": "indica que es flexible e indica una fecha"
+        },
+        {
+          "nro": 12,
+          "quien": "Sistema",
+          "texto": "solicita la Cantidad de Pasajeros por Tipo de Clase"
+        },
+        {
+          "nro": 13,
+          "quien": "Actor",
+          "texto": "indica la Cantidad de Pasajeros por Tipo de Clase"
+        },
+        {
+          "nro": 14,
+          "quien": "Sistema",
+          "texto": "permite confirmar la búsqueda"
+        },
+        {
+          "nro": 15,
+          "quien": "Actor",
+          "texto": "confirma la búsqueda"
+        },
+        {
+          "nro": 16,
+          "quien": "Sistema",
+          "texto": "verifica que los datos requeridos estén completos"
+        },
+        {
+          "nro": 17,
+          "quien": "Sistema",
+          "texto": "verifica flexibilidad: HorarioDesde = 0:00, HorarioHasta = 23:59"
+        },
+        {
+          "nro": 18,
+          "quien": "Sistema",
+          "texto": "verifica Sólo Ida y busca vuelos por ciudad de origen y destino, fecha, horario y butacas disponibles (reservas vigentes y capacidad de la aeronave)"
+        },
+        {
+          "nro": 19,
+          "quien": "Sistema",
+          "texto": "muestra para cada vuelo: horario y aeropuerto de salida, horario y aeropuerto de llegada, número, duración e importe total"
+        }
+      ],
+      "alternativos": [
+        {
+          "id": "A1",
+          "texto": "Selecciona Ida y Vuelta"
+        },
+        {
+          "id": "A2",
+          "texto": "Horarios no flexibles"
+        },
+        {
+          "id": "A3",
+          "texto": "No confirma la búsqueda"
+        },
+        {
+          "id": "A4",
+          "texto": "Faltan datos obligatorios"
+        },
+        {
+          "id": "A5",
+          "texto": "No se encuentran vuelos"
+        },
+        {
+          "id": "A6",
+          "texto": "Cancela el CU"
+        }
+      ]
+    }
+  ],
+  "clases": [
+    {
+      "nombre": "PantallaConsultarDisponibilidad",
+      "estereotipo": "boundary",
+      "atributos": [
+        "estado",
+        "fechaVuelo",
+        "flexibilidad",
+        "horaDesde",
+        "horaHasta",
+        "horaVuelo",
+        "listadoCiudadesDestino",
+        "listadoCiudadesOrigen",
+        "listadoPaisesDestino",
+        "listadoPaisesOrigen",
+        "listadoPciasDestino",
+        "listadoPciasOrigen",
+        "listaTiposDeVuelo",
+        "nroVuelo",
+        "opcionCancelar",
+        "opcionConfirmar"
+      ],
+      "metodos": [
+        "confirmar",
+        "habilitarHorariosYFlexibilidad",
+        "habilitarPantalla",
+        "ingresoCantidadPorClase",
+        "listarCiudadesDestino",
+        "listarCiudadesOrigen",
+        "listarPaisesDestino",
+        "listarPaisesOrigen",
+        "listarProvinciasDestino",
+        "listarProvinciasOrigen",
+        "mostrarVuelosDisponibles",
+        "opcionConsultaDispVuelos",
+        "seleccionCiudadDestino",
+        "seleccionCiudadOrigen",
+        "seleccionFechaYFlexibilidad",
+        "seleccionPaisDestino",
+        "seleccionPaisOrigen",
+        "seleccionProvinciaDestino",
+        "seleccionProvinciaOrigen",
+        "seleccionTipoVuelo",
+        "solicitarCantidadPasajerosPorClase",
+        "solicitarConfirmacion",
+        "solicitarSeleccionTipoVuelo"
+      ]
+    },
+    {
+      "nombre": "GestorDeConsultaDisponibilidad",
+      "estereotipo": "control",
+      "atributos": [
+        "cantidadIndicada",
+        "ciudadDestinoSeleccionada",
+        "ciudadOrigenSeleccionada",
+        "fechaHoraDesde",
+        "fechaHoraHasta",
+        "flexibilidadHoraria",
+        "paisDestinoSeleccionado",
+        "paisOrigenSeleccionado",
+        "paisSeleccionado",
+        "pciaDestinoSeleccionada",
+        "pciaOrigenSeleccionada",
+        "tipoDeClaseSeleccionada",
+        "tipoVueloSeleccionado"
+      ],
+      "metodos": [
+        "buscarVuelosParaFechaYDestino",
+        "cantidadPasajerosProTipoIndicado",
+        "ciudadDestinoSeleccionada",
+        "ciudadOrigenSeleccionada",
+        "consultarDispVuelos",
+        "determinarHoraDesdeYHasta",
+        "finCasoDeUso",
+        "obtenerCiudadesPciaDestino",
+        "obtenerCiudadesPciaOrigen",
+        "obtenerPaises",
+        "obtenerProvinciasPaisDestino",
+        "obtenerProvinciasPaisOrigen",
+        "obtenerTiposDeClase",
+        "obtenerTiposDeVuelo",
+        "paisDestinoSeleccionado",
+        "paisOrigenSeleccionado",
+        "pciaDestinoSeleccionada",
+        "pciaOrigenSeleccionada",
+        "seleccionFechaYFlexibilidad",
+        "tipoVueloSeleccionado",
+        "tomarConfirmacion",
+        "verificarDatosRequeridos",
+        "verificarDisponibilidadParaVuelo",
+        "verificarTipoVuelo"
+      ],
+      "_nota": "'cantidadPasajerosProTipoIndicado' transcripto tal como se lee en pág. 14 (¿errata de 'Por'?)"
+    },
+    {
+      "nombre": "Vuelo",
+      "estereotipo": "entity",
+      "atributos": [
+        "fecha",
+        "horaPartidaProgramada"
+      ],
+      "metodos": [
+        "calcularDisponibilidad",
+        "enZona",
+        "esAterrizado",
+        "esDeFechaYHoraYDestino",
+        "esFactibleCancelar",
+        "getCambioEstadoVuelo",
+        "getDefinicionVuelo",
+        "getFecha",
+        "getFechaHoraPartidaProgramada",
+        "getHoraPartidaProgramada",
+        "getReserva",
+        "mostrarDatosDefinicion",
+        "mostrarDatosVuelo",
+        "new",
+        "obtenerCiudadDestino",
+        "obtenerCiudadOrigen",
+        "obtenerDisponibilidadPorClase",
+        "obtenerDuracion",
+        "obtenerEstadoActual",
+        "obtenerNroVuelo",
+        "obtenerReservasSegunClase",
+        "obtenerTarifaSegunClase"
+      ]
+    },
+    {
+      "nombre": "DefinicionDeVuelo",
+      "estereotipo": "entity",
+      "atributos": [
+        "duracion",
+        "horarioPartida",
+        "nroVuelo",
+        "tiempoEmbarque"
+      ],
+      "metodos": [
+        "getAeropuertoDestino",
+        "getAeropuertoOrigen",
+        "getDiaSemana",
+        "getDuracion",
+        "getNroVuelo",
+        "getTarifa",
+        "getTipoAeroNave",
+        "mostrarCiudadDestino",
+        "mostrarCiudadOrigen",
+        "obtenerCapacidadSegunClase",
+        "obtenerTarifaSegunClase"
+      ]
+    },
+    {
+      "nombre": "Aeropuerto",
+      "estereotipo": "entity",
+      "atributos": [
+        "codigo",
+        "direccion",
+        "nombre"
+      ],
+      "metodos": [
+        "deQueCiudad",
+        "getNombre",
+        "getNombreCiudad"
+      ]
+    },
+    {
+      "nombre": "Ciudad",
+      "estereotipo": "entity",
+      "atributos": [
+        "codigo",
+        "nombre"
+      ],
+      "metodos": [
+        "getAeropuerto",
+        "getNombre"
+      ]
+    },
+    {
+      "nombre": "Provincia",
+      "estereotipo": "entity",
+      "atributos": [
+        "nombre"
+      ],
+      "metodos": [
+        "getCiudad",
+        "getNombre",
+        "obtenerAeropuertosProvincia"
+      ]
+    },
+    {
+      "nombre": "Pais",
+      "estereotipo": "entity",
+      "atributos": [
+        "nombre"
+      ],
+      "metodos": [
+        "getNombre",
+        "getProvincia",
+        "obtenerAeropuertosPais",
+        "obtenerCiudadesDePcia",
+        "setNombre"
+      ]
+    },
+    {
+      "nombre": "TipoAeronave",
+      "estereotipo": "entity",
+      "atributos": [
+        "capacidad",
+        "descripcion",
+        "nombre"
+      ],
+      "metodos": [
+        "getCapacidad",
+        "obtenerCapacidadPorTipoClase"
+      ]
+    },
+    {
+      "nombre": "Capacidad",
+      "estereotipo": "entity",
+      "atributos": [
+        "cantidad"
+      ],
+      "metodos": [
+        "esDeTipoClase",
+        "getCantidad",
+        "getTipoClase"
+      ]
+    },
+    {
+      "nombre": "Tarifa",
+      "estereotipo": "entity",
+      "atributos": [
+        "importe"
+      ],
+      "metodos": [
+        "getImporte",
+        "getTipoClase",
+        "obtenerCapacidadSegunClase"
+      ]
+    },
+    {
+      "nombre": "Reserva",
+      "estereotipo": "entity",
+      "atributos": [
+        "fechaYHoraCreada",
+        "fechaYHoraVto",
+        "nroReserva"
+      ],
+      "metodos": [
+        "esDeTipoClaseYFecha",
+        "estaVigente",
+        "getTipoClase"
+      ]
+    },
+    {
+      "nombre": "TipoClase",
+      "estereotipo": "entity",
+      "atributos": [
+        "nombre"
+      ],
+      "metodos": [
+        "getNombre",
+        "setNombre"
+      ]
+    },
+    {
+      "nombre": "TipoVuelo",
+      "estereotipo": "entity",
+      "atributos": [],
+      "metodos": [
+        "getNombre"
+      ]
+    }
+  ],
+  "relaciones": [
+    {
+      "desde": "DefinicionDeVuelo",
+      "hacia": "Aeropuerto",
+      "rol": "destino",
+      "mult": "1"
+    },
+    {
+      "desde": "DefinicionDeVuelo",
+      "hacia": "Aeropuerto",
+      "rol": "origen",
+      "mult": "1"
+    },
+    {
+      "desde": "Ciudad",
+      "hacia": "Aeropuerto",
+      "rol": "aeropuerto",
+      "mult": "0..*"
+    },
+    {
+      "desde": "Provincia",
+      "hacia": "Ciudad",
+      "rol": "ciudad",
+      "mult": "1..*"
+    },
+    {
+      "desde": "Pais",
+      "hacia": "Provincia",
+      "rol": "provincia",
+      "mult": "1..*"
+    },
+    {
+      "desde": "DefinicionDeVuelo",
+      "hacia": "TipoAeronave",
+      "rol": "tipoAeronave",
+      "mult": "1"
+    },
+    {
+      "desde": "DefinicionDeVuelo",
+      "hacia": "Tarifa",
+      "rol": "tarifa",
+      "mult": "1..*"
+    },
+    {
+      "desde": "TipoAeronave",
+      "hacia": "Capacidad",
+      "rol": "capacidad",
+      "mult": "1..*"
+    },
+    {
+      "desde": "Reserva",
+      "hacia": "TipoClase",
+      "rol": "tipoClase",
+      "mult": "1"
+    },
+    {
+      "desde": "Tarifa",
+      "hacia": "TipoClase",
+      "rol": "tipoClase",
+      "mult": "1"
+    },
+    {
+      "desde": "Capacidad",
+      "hacia": "TipoClase",
+      "rol": "tipoClase",
+      "mult": "1"
+    },
+    {
+      "desde": "Vuelo",
+      "hacia": "DefinicionDeVuelo",
+      "rol": "definicionDeVuelo",
+      "mult": "1"
+    },
+    {
+      "desde": "Vuelo",
+      "hacia": "Reserva",
+      "rol": "reserva",
+      "mult": "0..*"
+    }
+  ],
+  "realizaciones": [
+    {
+      "cu": "CU1",
+      "curso": "normal",
+      "vista": "comunicacion",
+      "fuente": "pág. 13",
+      "lineasDeVida": [
+        {
+          "id": "pantalla",
+          "clase": "PantallaConsultarDisponibilidad"
+        },
+        {
+          "id": "gestor",
+          "clase": "GestorDeConsultaDisponibilidad"
+        },
+        {
+          "id": "tiposVuelo",
+          "clase": "TipoVuelo",
+          "multiobjeto": true
+        },
+        {
+          "id": "paises",
+          "clase": "Pais",
+          "multiobjeto": true
+        },
+        {
+          "id": "paisOrigenSel",
+          "clase": "Pais"
+        },
+        {
+          "id": "paisDestinoSel",
+          "clase": "Pais"
+        },
+        {
+          "id": "provincias",
+          "clase": "Provincia",
+          "multiobjeto": true
+        },
+        {
+          "id": "pciaOrigenSel",
+          "clase": "Provincia"
+        },
+        {
+          "id": "pciaDestinoSel",
+          "clase": "Provincia"
+        },
+        {
+          "id": "ciudades",
+          "clase": "Ciudad",
+          "multiobjeto": true
+        },
+        {
+          "id": "tiposClase",
+          "clase": "TipoClase",
+          "multiobjeto": true
+        },
+        {
+          "id": "vuelos",
+          "clase": "Vuelo",
+          "multiobjeto": true
+        },
+        {
+          "id": "definicion",
+          "clase": "DefinicionDeVuelo"
+        },
+        {
+          "id": "origen",
+          "clase": "Aeropuerto"
+        },
+        {
+          "id": "destino",
+          "clase": "Aeropuerto"
+        },
+        {
+          "id": "tipoAeronave",
+          "clase": "TipoAeronave"
+        },
+        {
+          "id": "capacidades",
+          "clase": "Capacidad",
+          "multiobjeto": true
+        },
+        {
+          "id": "capDeTipoClase",
+          "clase": "Capacidad"
+        },
+        {
+          "id": "reservas",
+          "clase": "Reserva",
+          "multiobjeto": true
+        },
+        {
+          "id": "tarifas",
+          "clase": "Tarifa",
+          "multiobjeto": true
+        }
+      ],
+      "mensajes": [
+        {
+          "nro": 1,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "opcionConsultaDispVuelos",
+          "pasoCU": 1
+        },
+        {
+          "nro": 2,
+          "desde": "pantalla",
+          "hacia": "pantalla",
+          "metodo": "habilitarPantalla",
+          "pasoCU": 1
+        },
+        {
+          "nro": 3,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "consultarDispVuelos",
+          "pasoCU": 1
+        },
+        {
+          "nro": 4,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerTiposDeVuelo",
+          "pasoCU": 2
+        },
+        {
+          "nro": 5,
+          "desde": "gestor",
+          "hacia": "tiposVuelo",
+          "metodo": "getNombre",
+          "pasoCU": 2,
+          "iterativo": true
+        },
+        {
+          "nro": 6,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "solicitarSeleccionTipoVuelo",
+          "pasoCU": 2
+        },
+        {
+          "nro": 7,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionTipoVuelo",
+          "pasoCU": 3
+        },
+        {
+          "nro": 8,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "tipoVueloSeleccionado",
+          "pasoCU": 3
+        },
+        {
+          "nro": 9,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerPaises",
+          "pasoCU": 4
+        },
+        {
+          "nro": 10,
+          "desde": "gestor",
+          "hacia": "paises",
+          "metodo": "getNombre",
+          "pasoCU": 4,
+          "iterativo": true
+        },
+        {
+          "nro": 11,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "listarPaisesOrigen",
+          "pasoCU": 4
+        },
+        {
+          "nro": 12,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "listarPaisesDestino",
+          "pasoCU": 4
+        },
+        {
+          "nro": 13,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionPaisOrigen",
+          "pasoCU": 5
+        },
+        {
+          "nro": 14,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "paisOrigenSeleccionado",
+          "pasoCU": 5
+        },
+        {
+          "nro": 15,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerProvinciasPaisOrigen",
+          "pasoCU": 6
+        },
+        {
+          "nro": 16,
+          "desde": "gestor",
+          "hacia": "paisOrigenSel",
+          "metodo": "getProvincia",
+          "pasoCU": 6
+        },
+        {
+          "nro": 17,
+          "desde": "paisOrigenSel",
+          "hacia": "provincias",
+          "metodo": "getNombre",
+          "pasoCU": 6,
+          "iterativo": true
+        },
+        {
+          "nro": 18,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "listarProvinciasOrigen",
+          "pasoCU": 6
+        },
+        {
+          "nro": 19,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionPaisDestino",
+          "pasoCU": 5
+        },
+        {
+          "nro": 20,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "paisDestinoSeleccionado",
+          "pasoCU": 5
+        },
+        {
+          "nro": 21,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerProvinciasPaisDestino",
+          "pasoCU": 6
+        },
+        {
+          "nro": 22,
+          "desde": "gestor",
+          "hacia": "paisDestinoSel",
+          "metodo": "getProvincia",
+          "pasoCU": 6
+        },
+        {
+          "nro": 23,
+          "desde": "paisDestinoSel",
+          "hacia": "provincias",
+          "metodo": "getNombre",
+          "pasoCU": 6,
+          "iterativo": true
+        },
+        {
+          "nro": 24,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "listarProvinciasDestino",
+          "pasoCU": 6
+        },
+        {
+          "nro": 25,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionProvinciaOrigen",
+          "pasoCU": 7
+        },
+        {
+          "nro": 26,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "pciaOrigenSeleccionada",
+          "pasoCU": 7
+        },
+        {
+          "nro": 27,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerCiudadesPciaOrigen",
+          "pasoCU": 8
+        },
+        {
+          "nro": 28,
+          "desde": "gestor",
+          "hacia": "paisOrigenSel",
+          "metodo": "obtenerCiudadesDePcia",
+          "pasoCU": 8
+        },
+        {
+          "nro": 29,
+          "desde": "paisOrigenSel",
+          "hacia": "pciaOrigenSel",
+          "metodo": "getCiudad",
+          "pasoCU": 8
+        },
+        {
+          "nro": 30,
+          "desde": "pciaOrigenSel",
+          "hacia": "ciudades",
+          "metodo": "getNombre",
+          "pasoCU": 8,
+          "iterativo": true
+        },
+        {
+          "nro": 31,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "listarCiudadesOrigen",
+          "pasoCU": 8
+        },
+        {
+          "nro": 32,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionProvinciaDestino",
+          "pasoCU": 7
+        },
+        {
+          "nro": 33,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "pciaDestinoSeleccionada",
+          "pasoCU": 7
+        },
+        {
+          "nro": 34,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerCiudadesPciaDestino",
+          "pasoCU": 8
+        },
+        {
+          "nro": 35,
+          "desde": "gestor",
+          "hacia": "paisDestinoSel",
+          "metodo": "obtenerCiudadesDePcia",
+          "pasoCU": 8
+        },
+        {
+          "nro": 36,
+          "desde": "paisDestinoSel",
+          "hacia": "pciaDestinoSel",
+          "metodo": "getCiudad",
+          "pasoCU": 8
+        },
+        {
+          "nro": 37,
+          "desde": "pciaDestinoSel",
+          "hacia": "ciudades",
+          "metodo": "getNombre",
+          "pasoCU": 8,
+          "iterativo": true
+        },
+        {
+          "nro": 38,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "listarCiudadesDestino",
+          "pasoCU": 8
+        },
+        {
+          "nro": 39,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionCiudadOrigen",
+          "pasoCU": 9
+        },
+        {
+          "nro": 40,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "ciudadOrigenSeleccionada",
+          "pasoCU": 9
+        },
+        {
+          "nro": 41,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionCiudadDestino",
+          "pasoCU": 9
+        },
+        {
+          "nro": 42,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "ciudadDestinoSeleccionada",
+          "pasoCU": 9
+        },
+        {
+          "nro": 43,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "habilitarFlexibilidadHorarios",
+          "pasoCU": 10
+        },
+        {
+          "nro": 44,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "seleccionFechaYFlexibilidad",
+          "pasoCU": 11
+        },
+        {
+          "nro": 45,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "seleccionFechaYFlexibilidad",
+          "pasoCU": 11
+        },
+        {
+          "nro": 46,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "obtenerTiposDeClase",
+          "pasoCU": 12
+        },
+        {
+          "nro": 47,
+          "desde": "gestor",
+          "hacia": "tiposClase",
+          "metodo": "getNombre",
+          "pasoCU": 12,
+          "iterativo": true
+        },
+        {
+          "nro": 48,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "solicitarCantidadPasajerosPorClase",
+          "pasoCU": 12
+        },
+        {
+          "nro": 49,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "ingresoCantidadPorClase",
+          "pasoCU": 13
+        },
+        {
+          "nro": 50,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "cantidadPasajerosPorTipoIndicado",
+          "pasoCU": 13
+        },
+        {
+          "nro": 51,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "solicitarConfirmacion",
+          "pasoCU": 14
+        },
+        {
+          "nro": 52,
+          "desde": "actor",
+          "hacia": "pantalla",
+          "metodo": "confirmar",
+          "pasoCU": 15
+        },
+        {
+          "nro": 53,
+          "desde": "pantalla",
+          "hacia": "gestor",
+          "metodo": "tomarConfirmacion",
+          "pasoCU": 15
+        },
+        {
+          "nro": 54,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "verificarDatosRequeridos",
+          "pasoCU": 16
+        },
+        {
+          "nro": 55,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "determinarHoraDesdeYHasta",
+          "pasoCU": 17
+        },
+        {
+          "nro": 56,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "verificarTipoVuelo",
+          "pasoCU": 18
+        },
+        {
+          "nro": 57,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "buscarVuelosParaFechaYDestino",
+          "pasoCU": 18
+        },
+        {
+          "nro": 58,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "esDeFechaYHoraYDestino",
+          "pasoCU": 18,
+          "iterativo": true
+        },
+        {
+          "nro": 59,
+          "desde": "vuelos",
+          "hacia": "vuelos",
+          "metodo": "getFecha",
+          "pasoCU": 18
+        },
+        {
+          "nro": 60,
+          "desde": "vuelos",
+          "hacia": "vuelos",
+          "metodo": "getHoraPartidaProgramada",
+          "pasoCU": 18
+        },
+        {
+          "nro": 61,
+          "desde": "vuelos",
+          "hacia": "vuelos",
+          "metodo": "obtenerCiudadOrigen",
+          "pasoCU": 18
+        },
+        {
+          "nro": 62,
+          "desde": "vuelos",
+          "hacia": "definicion",
+          "metodo": "mostrarCiudadOrigen",
+          "pasoCU": 18
+        },
+        {
+          "nro": 63,
+          "desde": "definicion",
+          "hacia": "origen",
+          "metodo": "getCiudad",
+          "pasoCU": 18,
+          "_lectura": "dudosa: leído en imagen de baja resolución"
+        },
+        {
+          "nro": 64,
+          "desde": "origen",
+          "hacia": "ciudades",
+          "metodo": "getNombre",
+          "pasoCU": 18,
+          "_lectura": "dudosa: leído en imagen de baja resolución"
+        },
+        {
+          "nro": 65,
+          "desde": "vuelos",
+          "hacia": "vuelos",
+          "metodo": "obtenerCiudadDestino",
+          "pasoCU": 18
+        },
+        {
+          "nro": 66,
+          "desde": "vuelos",
+          "hacia": "definicion",
+          "metodo": "mostrarCiudadDestino",
+          "pasoCU": 18
+        },
+        {
+          "nro": 67,
+          "desde": "definicion",
+          "hacia": "destino",
+          "metodo": "getCiudad",
+          "pasoCU": 18,
+          "_lectura": "dudosa: leído en imagen de baja resolución"
+        },
+        {
+          "nro": 68,
+          "desde": "destino",
+          "hacia": "ciudades",
+          "metodo": "getNombre",
+          "pasoCU": 18,
+          "_lectura": "dudosa: leído en imagen de baja resolución"
+        },
+        {
+          "nro": 69,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "verificarDisponibilidadParaVuelo",
+          "pasoCU": 18
+        },
+        {
+          "nro": 70,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "calcularDisponibilidad",
+          "pasoCU": 18,
+          "iterativo": true
+        },
+        {
+          "nro": 71,
+          "desde": "vuelos",
+          "hacia": "vuelos",
+          "metodo": "obtenerDisponibilidadPorClase",
+          "pasoCU": 18
+        },
+        {
+          "nro": 72,
+          "desde": "vuelos",
+          "hacia": "definicion",
+          "metodo": "obtenerCapacidadSegunClase",
+          "pasoCU": 18
+        },
+        {
+          "nro": 73,
+          "desde": "definicion",
+          "hacia": "tipoAeronave",
+          "metodo": "obtenerCapacidadSegunClase",
+          "pasoCU": 18
+        },
+        {
+          "nro": 74,
+          "desde": "tipoAeronave",
+          "hacia": "capacidades",
+          "metodo": "esDeTipoClase",
+          "pasoCU": 18,
+          "iterativo": true
+        },
+        {
+          "nro": 75,
+          "desde": "tipoAeronave",
+          "hacia": "capDeTipoClase",
+          "metodo": "getCantidad",
+          "pasoCU": 18
+        },
+        {
+          "nro": 76,
+          "desde": "vuelos",
+          "hacia": "vuelos",
+          "metodo": "obtenerReservasSegunClase",
+          "pasoCU": 18
+        },
+        {
+          "nro": 77,
+          "desde": "vuelos",
+          "hacia": "reservas",
+          "metodo": "esDeTipoClaseYFecha",
+          "pasoCU": 18,
+          "iterativo": true
+        },
+        {
+          "nro": 78,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "determinarDisponibilidadSegunCantidad",
+          "pasoCU": 18
+        },
+        {
+          "nro": 79,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "obtenerDuracion",
+          "pasoCU": 19,
+          "iterativo": true
+        },
+        {
+          "nro": 80,
+          "desde": "vuelos",
+          "hacia": "definicion",
+          "metodo": "getDuracion",
+          "pasoCU": 19
+        },
+        {
+          "nro": 81,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "calcularImporteTotal",
+          "pasoCU": 19
+        },
+        {
+          "nro": 82,
+          "desde": "gestor",
+          "hacia": "vuelos",
+          "metodo": "obtenerTarifaSegunClase",
+          "pasoCU": 19,
+          "iterativo": true
+        },
+        {
+          "nro": 83,
+          "desde": "vuelos",
+          "hacia": "definicion",
+          "metodo": "obtenerTarifaSegunClase",
+          "pasoCU": 19
+        },
+        {
+          "nro": 84,
+          "desde": "definicion",
+          "hacia": "tarifas",
+          "metodo": "getImporte",
+          "pasoCU": 19,
+          "iterativo": true
+        },
+        {
+          "nro": 85,
+          "desde": "gestor",
+          "hacia": "pantalla",
+          "metodo": "mostrarVuelosDisponibles",
+          "pasoCU": 19
+        },
+        {
+          "nro": 86,
+          "desde": "gestor",
+          "hacia": "gestor",
+          "metodo": "finCasoDeUso"
+        }
+      ]
+    }
+  ],
+  "maquinasDeEstado": []
+}

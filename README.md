@@ -47,6 +47,7 @@ npm install
 npm test                                   # tests del validador
 npm run validar -- corpus/epc-lineas-aereas/modelo/cu2-cancelar-vuelo.json
 npm run plantuml -- corpus/epc-lineas-aereas/modelo/cu2-cancelar-vuelo.json salida
+npm run ficha -- corpus/epc-lineas-aereas/modelo/cu1-consultar-disponibilidad.json   # ficha para revisar vs PDF
 ```
 
 Los `.puml` generados se ven con cualquier visor de PlantUML (p. ej. la extensión de VS Code).
@@ -54,4 +55,4 @@ Los `.puml` generados se ven con cualquier visor de PlantUML (p. ej. la extensi�
 ## Estado
 
 Fase 1–2 en curso: validador v0 (9 reglas) y proyector PlantUML (clases y secuencia),
-probados sobre el CU Cancelar Vuelo del EPC Líneas Aéreas. Ver [roadmap](docs/06-roadmap.md).
+probados sobre CU1, CU2 y CU3 del EPC Líneas Aéreas. Ver [roadmap](docs/06-roadmap.md).

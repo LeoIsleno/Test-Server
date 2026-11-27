@@ -8,7 +8,8 @@
     "validar": "tsx src/cli/validar.ts",
     "plantuml": "tsx src/cli/plantuml.ts",
     "test": "tsx --test test/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ficha": "tsx src/cli/ficha.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.11",

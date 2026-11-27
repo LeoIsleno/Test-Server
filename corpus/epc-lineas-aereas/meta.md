@@ -2,7 +2,9 @@
 
 - **Autores:** Laura Alarcón, Gerardo Boiero, Judith Meles (DSI, UTN FRC)
 - **Tipo:** Ejercicio Práctico Complementario (formato de parcial)
-- **Estado de transcripción:** borrador (sólo CU Cancelar Vuelo, parcial)
+- **Estado de transcripción:** borrador, sin validación humana. CU1, CU2 y CU3 con
+  realización y vista de clases; DTE parcial; Observer pendiente. Fichas de revisión en
+  `fichas/`.
 
 ## Consignas
 1. Realización de CU de análisis (curso normal).
