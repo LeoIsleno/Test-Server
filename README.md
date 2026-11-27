@@ -36,6 +36,7 @@ ambos salen del mismo objeto.
 | [docs/adr/](docs/adr/) | Registros de decisiones de arquitectura (ADR) |
 | [corpus/](corpus/) | Corpus de ejercicios: metadatos y transcripciones (no los PDF originales) |
 | [corpus/cobertura.md](corpus/cobertura.md) | Matriz de cobertura: qué tipos de problema cubre el corpus |
+| [corpus/plan-de-carga.md](corpus/plan-de-carga.md) | Plan de carga por oleadas, split y costos |
 
 ## Estado
 

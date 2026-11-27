@@ -1,0 +1,2 @@
+id,tipo,anio,dominio,tiene_solucion,cu_tipos,realizacion,dte,patron,der,paginas,split,estado
+EPC-LA-v1.35,EPC,,Líneas Aéreas,si,"consulta-cascada;cambio-estado",comunicacion+secuencia,si(compuesto),Observer-push,no,26,train,transcripcion-parcial
