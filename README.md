@@ -35,6 +35,7 @@ ambos salen del mismo objeto.
 | [docs/bitacora.md](docs/bitacora.md) | Bitácora de decisiones y avances (para retomar en 1 año) |
 | [docs/adr/](docs/adr/) | Registros de decisiones de arquitectura (ADR) |
 | [corpus/](corpus/) | Corpus de ejercicios: metadatos y transcripciones (no los PDF originales) |
+| [corpus/cobertura.md](corpus/cobertura.md) | Matriz de cobertura: qué tipos de problema cubre el corpus |
 
 ## Estado
 
