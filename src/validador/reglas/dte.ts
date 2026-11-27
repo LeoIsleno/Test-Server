@@ -23,6 +23,7 @@ export const DT01: Regla = {
           ubicacion: `DTE ${dte.clase}, transiciones ${trans.join(", ")}`,
           detalle: `La acción /${accion}() no es un método de ${dte.clase}`,
           sugerencias: [`agregar ${accion}() a ${dte.clase}`],
+          refs: { clases: [dte.clase], cu: dte.transiciones.find((t) => t.accion === accion)?.cu, metodo: accion },
         });
       }
     }
@@ -83,6 +84,7 @@ export const DT03: Regla = {
                 (soloDTE.length ? `El DTE permite "${cu!.nombre}" desde ${soloDTE.join(", ")}, que el CU no menciona. ` : "") +
                 (soloCU.length ? `El CU menciona ${soloCU.join(", ")}, sin transición en el DTE.` : ""),
               sugerencias: ["alinear el texto del CU con el DTE y las reglas de negocio"],
+              refs: { cu: cuId, clases: [dte.clase] },
             });
           }
         }

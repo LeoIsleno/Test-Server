@@ -25,6 +25,7 @@ export const RC01: Regla = {
               `usar un método existente de ${clase}`,
               "cambiar el destinatario del mensaje",
             ],
+            refs: { cu: r.cu, mensajes: [msj.nro], clases: [clase], metodo: msj.metodo },
           });
         }
       }
@@ -49,6 +50,7 @@ export const RC02: Regla = {
           ubicacion: `${r.cu} ${r.vista}, línea de vida ${l.id}`,
           detalle: `La clase ${l.clase} no existe en el modelo`,
           sugerencias: [`crear la clase ${l.clase}`, "corregir el nombre"],
+          refs: { cu: r.cu },
         })),
     );
   },
@@ -83,6 +85,7 @@ export const RC03: Regla = {
           detalle: `${a} envía mensajes a ${b} pero no hay relación navegable ${a} → ${b}` +
             (inversa ? ` (sólo existe ${b} → ${a})` : ""),
           sugerencias: [`agregar navegabilidad ${a} → ${b}`, "obtener el dato por otro camino"],
+          refs: { cu: r.cu, mensajes: [msj.nro], clases: [a, b] },
         });
       }
     }

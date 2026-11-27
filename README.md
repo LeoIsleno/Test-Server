@@ -52,7 +52,15 @@ npm run ficha -- corpus/epc-lineas-aereas/modelo/cu1-consultar-disponibilidad.js
 
 Los `.puml` generados se ven con cualquier visor de PlantUML (p. ej. la extensión de VS Code).
 
+### Interfaz web
+
+```bash
+npm run dev        # http://localhost:5173 — elegir ejercicio y CU, ver CU, clases y secuencia
+npm run artifact   # compila y empaqueta en artifact/profesor-dsi.html (vista previa publicada en claude.ai)
+```
+
 ## Estado
 
 Fase 1–2 en curso: validador v0 (9 reglas) y proyector PlantUML (clases y secuencia),
-probados sobre CU1, CU2 y CU3 del EPC Líneas Aéreas. Ver [roadmap](docs/06-roadmap.md).
+probados sobre CU1, CU2 y CU3 del EPC Líneas Aéreas. Interfaz web v0 (visor por CU con
+validación en vivo; todavía sin edición). Ver [roadmap](docs/06-roadmap.md).

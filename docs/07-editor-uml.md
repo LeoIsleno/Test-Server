@@ -48,3 +48,22 @@ Alcance propuesto, en orden de prioridad:
 - **Generar**: el agente produce el modelo y el alumno lo edita en el mismo editor.
 - **Revisar**: se carga un modelo y se reporta contra las reglas y la solución oficial si
   existe.
+
+## Estado: visor v0 (2026-11-27)
+Implementado en `web/` (Vite + TypeScript, sin framework; `dagre` sólo para el layout
+del diagrama de clases):
+- Selector de ejercicio (todo `corpus/*/ejercicio.json`) y lista de CU con la cantidad de
+  violaciones de cada uno.
+- Por CU: consignas que aplican, tabla de pasos con los mensajes que realizan cada paso
+  (trazabilidad), **diagrama de clases** y **diagrama de secuencia** dibujados en SVG
+  desde el modelo canónico.
+- Validador corriendo en el navegador: métodos usados y no declarados aparecen en rojo
+  dentro de la clase; mensajes con violaciones en rojo/ámbar; clic en una violación la
+  ubica en el diagrama; clic en una clase resalta sus líneas de vida y viceversa.
+- Dependencias boundary/control → entidades derivadas de la realización (punteadas).
+- Cargar un modelo JSON propio.
+- Diagramas de actividad: fuera de alcance por ahora.
+
+Pendiente: edición (crear/mover clases, agregar mensajes con autocompletado de métodos),
+exportación a PDF, DTE y DER. Vista previa publicada como Artifact (privado) a partir de
+`npm run artifact`.

@@ -9,6 +9,8 @@ export interface Violacion {
   ubicacion: string;
   detalle: string;
   sugerencias?: string[];
+  /** Referencias estructuradas: permiten resaltar la violación en los diagramas. */
+  refs?: { cu?: string; mensajes?: number[]; clases?: string[]; pasos?: number[]; metodo?: string };
 }
 
 export interface Regla {

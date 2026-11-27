@@ -1,0 +1,19 @@
+{
+  "id": "EPC-LA-v1.35",
+  "nombre": "Líneas Aéreas",
+  "tipo": "EPC",
+  "fuente": "EPC Líneas Aéreas v1.35 — Alarcón, Boiero, Meles (DSI, UTN FRC)",
+  "objetivo": "Desarrollar modelos específicos de un software que permite consulta, reserva y cancelación de vuelos de una línea aérea, a partir de una descripción del negocio.",
+  "consignas": [
+    { "nro": "1", "texto": "Construya la realización de caso de uso de análisis del escenario del curso normal del caso de uso planteado.", "artefacto": "realizacion" },
+    { "nro": "2", "texto": "Construya la vista de clases de análisis incluyendo las clases del diagrama de comunicación del punto anterior. Incluir atributos y métodos de las clases, navegabilidad y multiplicidad en todas las relaciones.", "artefacto": "clases" },
+    { "nro": "3.a", "texto": "Respecto de la clase VUELO: construir el DTE indicando estados, transiciones, métodos asociados a las transiciones y condiciones de control si aplica.", "artefacto": "dte" },
+    { "nro": "3.b", "texto": "Listar los casos de uso asociados a las transiciones.", "artefacto": "dte" },
+    { "nro": "4", "texto": "Realice la vista de la estructura (clases de diseño) y la vista dinámica (secuencia) implementando el patrón de diseño que resuelva la notificación automática de la cancelación de un vuelo a los interesados. Incluir pseudocódigo o explicación textual.", "artefacto": "patron" }
+  ],
+  "casosDeUso": [
+    { "id": "CU1", "nombre": "Consultar disponibilidad de vuelos", "modelo": "modelo/cu1-consultar-disponibilidad.json", "consignas": ["1", "2"] },
+    { "id": "CU2", "nombre": "Cancelar Vuelo", "modelo": "modelo/cu2-cancelar-vuelo.json", "consignas": ["1", "2", "3.a", "3.b", "4"] },
+    { "id": "CU3", "nombre": "Actualizar situación de Vuelo", "modelo": "modelo/cu3-actualizar-situacion.json", "consignas": ["1", "2", "3.a", "3.b"] }
+  ]
+}

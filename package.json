@@ -9,11 +9,16 @@
     "plantuml": "tsx src/cli/plantuml.ts",
     "test": "tsx --test test/*.test.ts",
     "typecheck": "tsc --noEmit",
-    "ficha": "tsx src/cli/ficha.ts"
+    "ficha": "tsx src/cli/ficha.ts",
+    "dev": "vite",
+    "build": "vite build",
+    "artifact": "vite build && tsx scripts/empaquetar-artifact.ts"
   },
   "devDependencies": {
+    "@dagrejs/dagre": "^3.1.4",
     "@types/node": "^26.6.11",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite": "^8.4.0"
   }
 }

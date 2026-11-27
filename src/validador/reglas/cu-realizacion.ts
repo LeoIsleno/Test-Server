@@ -18,6 +18,7 @@ export const CR01: Regla = {
             severidad: "B",
             ubicacion: `${cu.id} paso ${p.nro}`,
             detalle: `El paso "${p.quien}: ${p.texto}" no tiene mensajes en la realización`,
+            refs: { cu: cu.id, pasos: [p.nro] },
           });
         }
       }
@@ -41,9 +42,13 @@ export const CR03: Regla = {
     for (const r of m.realizaciones) {
       let ultimo = 0;
       const fuera: string[] = [];
+      const nros: number[] = [];
       for (const msj of [...r.mensajes].sort((a, b) => a.nro - b.nro)) {
         if (msj.pasoCU === undefined) continue;
-        if (msj.pasoCU < ultimo) fuera.push(`${msj.nro} (paso ${msj.pasoCU} después del ${ultimo})`);
+        if (msj.pasoCU < ultimo) {
+          fuera.push(`${msj.nro} (paso ${msj.pasoCU} después del ${ultimo})`);
+          nros.push(msj.nro);
+        }
         ultimo = Math.max(ultimo, msj.pasoCU);
       }
       if (fuera.length) {
@@ -53,6 +58,7 @@ export const CR03: Regla = {
           ubicacion: `${r.cu} ${r.vista}`,
           detalle: `${fuera.length} mensaje(s) fuera del orden del CU: ${fuera.join(", ")}`,
           sugerencias: ["si es un intercalado intencional (origen/destino), redactar el CU en ese orden o aceptarlo"],
+          refs: { cu: r.cu, mensajes: nros },
         });
       }
     }
@@ -76,6 +82,7 @@ export const CR04: Regla = {
         severidad: "A" as const,
         ubicacion: `${r.cu} ${r.vista}`,
         detalle: "El último mensaje no es finCU() / finCasoDeUso()",
+        refs: { cu: r.cu },
       }));
   },
 };

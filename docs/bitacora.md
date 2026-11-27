@@ -2,6 +2,14 @@
 
 Formato: fecha — qué se hizo — qué se decidió — próximo paso. Lo más nuevo arriba.
 
+## 2026-11-27 — Interfaz web v0
+- Visor por CU en `web/`: consignas, pasos con trazabilidad a mensajes, diagrama de
+  clases y de secuencia en SVG desde el modelo, validación en vivo con resaltado cruzado.
+- `ejercicio.json` por documento del corpus: consignas y qué CU las aplica.
+- Violaciones con referencias estructuradas (`refs`: mensajes, clases, pasos, método).
+- Decisión: el código vive en el repo; el Artifact es sólo una vista previa compilada
+  (`npm run artifact`), para verlo sin instalar nada.
+
 ## 2026-11-27 — CU1 y CU3 transcriptos
 - CU1 (comunicación, 86 mensajes, págs. 4–6, 13, 14) y CU3 escenario aterrizar
   (secuencia, 40 mensajes, págs. 10, 19, 20). Transcripción manual desde las imágenes,
