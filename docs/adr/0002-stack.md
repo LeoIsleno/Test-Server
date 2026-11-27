@@ -1,17 +1,20 @@
 # ADR-0002 — Lenguaje y stack
 
-**Estado:** Propuesto
+**Estado:** Propuesto (actualizado 2026-11-27; reemplaza la propuesta inicial de Python)
+
+## Contexto
+Apareció el requisito del editor web con validación en vivo (doc 07, ADR-0005).
 
 ## Opciones
-- **Python**: ecosistema más amplio para RAG/ML y para un posible fine-tuning en el
-  año 2; SDK oficial de Anthropic; habitual en trabajos académicos.
-- **TypeScript**: buena opción si la interfaz web es prioritaria; SDK oficial también.
-- Java/C#: posibles (SDK oficiales) pero con menos herramientas de RAG/ML.
+- **TypeScript en todo**: el mismo validador corre en el navegador (editor, en vivo y
+  sin servidor) y en el backend (agente, evaluación). Un solo lenguaje para mantener
+  durante 2 años. Tiene SDK oficial de Anthropic.
+- **Python núcleo + TypeScript editor**: mejor ecosistema de ML, pero el validador
+  quedaría duplicado o tendría que correr siempre en el servidor.
 
 ## Propuesta
-Python para el núcleo (modelo canónico, validador, RAG, evaluación). Interfaz a definir.
-Almacenamiento: SQLite al inicio → Postgres + pgvector cuando el corpus crezca.
-Render: PlantUML.
+TypeScript en todo (Node en el backend). Python sólo si se hace el experimento de
+ajuste fino del año 2, que es independiente: consume el JSON canónico y se evalúa con el
+mismo validador expuesto por CLI.
 
-## A decidir por el autor
-Confirmar lenguaje según lo que domine y lo que pida la cátedra de proyecto final.
+## A confirmar por el autor

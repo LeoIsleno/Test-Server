@@ -95,3 +95,31 @@ corpus nunca quedan rotas. Se configura en `.claude/settings.json`.
   `auto` + instrucción clara + `strict`.
 - Verificar en cada respuesta `usage.cache_read_input_tokens`: si es 0 en llamadas
   repetidas, algo está rompiendo el caché.
+
+## Presupuesto de contexto: nunca se carga "todo"
+
+Lo que crece con el tiempo (corpus, memoria, modelos) **nunca entra entero**. Sólo entra
+un bloque fijo de tamaño constante y, del resto, la porción que el pedido necesita.
+
+| Sección | ¿Crece? | Qué entra | Presupuesto aprox. |
+|---|---|---|---|
+| Herramientas + system (convenciones, esquema, catálogo) | No | Siempre, cacheado | 15–20k tokens |
+| Modelo canónico del ejercicio | Sí | Sólo la porción relevante: clases del CU pedido + vecinas directas, y un índice del resto | 5–15k |
+| Ejemplos del corpus (RAG) | Sí | Top 2–3 artefactos parecidos | 10–15k |
+| Memoria de correcciones | Sí | Top 3–5 que toquen las mismas clases/reglas | 1–3k |
+| Pedido + violaciones del validador | — | Lo de esta ronda | 1–3k |
+| **Total por llamada** | | | **≈ 35–55k** |
+
+Referencia: un EPC completo transcripto puede andar en 20–30k tokens, así que un corpus de
+15 documentos ya supera los 300k. Cargarlo entero sería caro y además empeora las
+respuestas: con más texto irrelevante el modelo presta menos atención a lo importante
+(Anthropic lo describe en *Effective context engineering for AI agents*).
+
+### Técnicas
+- **Contexto justo a tiempo**: el modelo ve un índice ("clases: Vuelo, Estado, …") y pide
+  el detalle con `leer_modelo(clase)` sólo si lo necesita.
+- **Sin historial acumulado**: cada tarea empieza limpia. El estado está en el JSON del
+  modelo, no en la conversación, así que no hace falta arrastrar el chat anterior.
+- **Violaciones resumidas**: al modelo vuelven sólo las violaciones nuevas, no el
+  reporte completo.
+- **Medir**: registrar `input_tokens` por sección; si una pasa su presupuesto, recortar.
