@@ -39,3 +39,35 @@ respuesta del agente ─▶ usuario/docente marca: ✔ correcto / ✘ error (con
 > combinadas? ¿Agrega algo el ajuste fino de un modelo abierto frente a RAG + validador?
 
 Esto da una tesis concreta, medible y defendible, en lugar de "entrenamos una IA".
+
+## El corpus ES el dataset (decisión reversible)
+
+Transcribir y validar ejercicios se hace igual para RAG que para entrenar. Desde el día
+1 cada ejemplo validado se exporta también en formato de entrenamiento, así la opción
+de ajuste fino queda abierta sin trabajo extra.
+
+```jsonl
+{"id": "EPC-LA-v1.35/CU2/realizacion", "split": "train",
+ "input":  {"dominio": "...", "reglasNegocio": [...], "cu": {...}, "consigna": "Realización de análisis, curso normal, secuencia", "modeloPrevio": {...}},
+ "output": {"parche": {...}},            // fragmento del modelo canónico
+ "validacion": {"estado": "validado", "por": "docente|alumno", "violaciones": []}}
+```
+
+- El `split` se asigna **por documento** (igual que en el doc 05).
+- Un ejemplo por artefacto (CU → realización, realización → clases, clases → DTE, …),
+  no por ejercicio entero: multiplica los ejemplos y coincide con las etapas del pipeline.
+
+### Datos sintéticos (para escalar si se entrena)
+Con ~15 documentos salen cientos de ejemplos: poco para ajuste fino. Para llegar a
+miles: generar **variantes de dominio** (biblioteca, hospital, cine…) con sus
+soluciones usando Claude, filtrar con el validador y revisar una muestra a mano.
+- El validador garantiza consistencia, **no** criterio de cátedra → muestreo humano
+  obligatorio.
+- Costo estimado: con Batch API (50 % menos), ~USD 0,15–0,30 por ejemplo según modelo
+  → 1.000 ejemplos ≈ USD 150–300. Fuera del alcance del saldo actual; planificarlo para
+  el año 2 si el experimento se justifica.
+
+### Hardware para el experimento del año 2
+GPU alquilada por horas sólo durante el entrenamiento: RTX 5090 (32 GB) para modelos de
+hasta ~30B con QLoRA; A40 (48 GB) da margen para ~30B cómodo o ~70B ajustado. La
+elección depende del tamaño de modelo a comparar, no al revés.
