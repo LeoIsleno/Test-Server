@@ -12,6 +12,8 @@ validador**: debe detectarlos (o el esquema debe poder marcarlos como aceptados)
 | H3 | Comunicación CU2 (pág. 15) vs vista de clases CU2 (pág. 18) | El gestor se envía `notificar()` (msg 46), pero la clase `GestorCancelacionVuelo` declara `notificarEstadoVuelo()`. En el diseño Observer (pág. 22) aparecen ambos. | RC-01 |
 | H4 | Vista de clases CU2 (pág. 18) vs pseudocódigo Observer (pág. 25) | El gestor guarda la selección de vuelo (`tomarVuelo()`), pero no tiene atributo para el vuelo elegido; en el pseudocódigo de diseño sí: `private Vuelo vuelo`. | RC-05 |
 | H5 | Observer estructura (pág. 22) vs pseudocódigo (pág. 25) | `suscribir/quitar` reciben `IObservadorVuelo[]` en el diagrama y un `IObservadorVuelo` en el pseudocódigo. | PT-02 |
+| H7 | DTE Vuelo (pág. 21) vs CU2 págs. 8–9 | **Encontrado por el validador.** El DTE permite cancelar desde `Cerrado`, pero ninguna versión del CU lo enumera entre los vuelos cancelables. (Confirmar la lectura de esa transición en el original.) | DT-03 |
+| H8 | Secuencia CU2 (pág. 17) vs vista de clases (pág. 18) | **Encontrado por el validador.** `origen:Aeropuerto` le pide `getNombre()` a `Ciudad`, pero la asociación navegable es `Ciudad → Aeropuerto`. La vista muestra además una dependencia punteada; definir cómo representa la cátedra ese acceso. | RC-03 (A) |
 | H6 | Observer (págs. 22/25) | `ISujetoVuelo` es interfaz pero declara el atributo `observadores`. Probablemente simplificación didáctica (en Java una interfaz no tiene atributos de instancia); a confirmar cómo lo acepta la cátedra. | PT-02 (A) |
 
 ## Por qué esto importa para el proyecto

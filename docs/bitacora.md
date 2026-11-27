@@ -2,6 +2,17 @@
 
 Formato: fecha — qué se hizo — qué se decidió — próximo paso. Lo más nuevo arriba.
 
+## 2026-11-27 — Validador v0 sobre Líneas Aéreas
+- Stack: TypeScript (ADR-0002, adoptado de hecho; pendiente confirmación del autor).
+- Transcripción completa de la secuencia de CU2 (49 mensajes, pág. 17).
+- Validador v0: RC-01, RC-02, RC-03 (sólo entity→entity), CR-01, CR-03, CR-04, DT-01,
+  DT-02, DT-03. Proyector PlantUML de clases y secuencia.
+- Resultado sobre el EPC tal cual: 7 violaciones (6 bloqueantes). Reproduce H1, H2, H3 y
+  encuentra dos candidatos nuevos: H7 (Cerrado) y H8 (navegabilidad Aeropuerto→Ciudad).
+- Test: con las correcciones propuestas el modelo queda en 0 violaciones.
+- Próximo paso: transcribir vista de clases y realización de CU1 y CU3; reglas RC-04,
+  RC-06, PT-01/02 (Observer).
+
 ## 2026-11-27 — Reglas, contexto y hooks
 - Reglas de consistencia = código (validador); convenciones = archivos cacheados en el
   system prompt; ejemplos = RAG. Pre/post de herramientas en el loop propio; hooks de

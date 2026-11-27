@@ -38,6 +38,20 @@ ambos salen del mismo objeto.
 | [corpus/cobertura.md](corpus/cobertura.md) | Matriz de cobertura: qué tipos de problema cubre el corpus |
 | [corpus/plan-de-carga.md](corpus/plan-de-carga.md) | Plan de carga por oleadas, split y costos |
 
+## Cómo correrlo
+
+Requiere Node 22+.
+
+```bash
+npm install
+npm test                                   # tests del validador
+npm run validar -- corpus/epc-lineas-aereas/modelo/cu2-cancelar-vuelo.json
+npm run plantuml -- corpus/epc-lineas-aereas/modelo/cu2-cancelar-vuelo.json salida
+```
+
+Los `.puml` generados se ven con cualquier visor de PlantUML (p. ej. la extensión de VS Code).
+
 ## Estado
 
-Fase 0 — Diseño y documentación. Ver [roadmap](docs/06-roadmap.md).
+Fase 1–2 en curso: validador v0 (9 reglas) y proyector PlantUML (clases y secuencia),
+probados sobre el CU Cancelar Vuelo del EPC Líneas Aéreas. Ver [roadmap](docs/06-roadmap.md).
