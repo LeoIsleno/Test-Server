@@ -30,6 +30,7 @@ ambos salen del mismo objeto.
 | [docs/05-evaluacion.md](docs/05-evaluacion.md) | Cómo medimos si el profesor es bueno |
 | [docs/06-roadmap.md](docs/06-roadmap.md) | Plan de 2 años con la pausa de investigación |
 | [docs/07-editor-uml.md](docs/07-editor-uml.md) | Editor web de diagramas consistente y exportable a PDF |
+| [docs/08-reglas-y-contexto.md](docs/08-reglas-y-contexto.md) | Implementación de reglas, armado de contexto y hooks |
 | [docs/convenciones-catedra.md](docs/convenciones-catedra.md) | Convenciones de la cátedra extraídas de los EPC |
 | [docs/bitacora.md](docs/bitacora.md) | Bitácora de decisiones y avances (para retomar en 1 año) |
 | [docs/adr/](docs/adr/) | Registros de decisiones de arquitectura (ADR) |

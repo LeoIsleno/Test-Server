@@ -2,6 +2,11 @@
 
 Formato: fecha — qué se hizo — qué se decidió — próximo paso. Lo más nuevo arriba.
 
+## 2026-11-27 — Reglas, contexto y hooks
+- Reglas de consistencia = código (validador); convenciones = archivos cacheados en el
+  system prompt; ejemplos = RAG. Pre/post de herramientas en el loop propio; hooks de
+  Claude Code sólo para el desarrollo del repo (doc 08).
+
 ## 2026-11-27 — Modelo y editor
 - Decisión: API de Anthropic como base; GPU alquilada (p. ej. 5090) sólo para el
   experimento de ajuste fino del año 2 (ADR-0004).
